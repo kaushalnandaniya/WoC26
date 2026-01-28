@@ -1,125 +1,85 @@
+# College Student Placement Prediction
 
+This project focuses on predicting student placement status and potential salary based on academic performance, internship experience, and other extracurricular factors. It utilizes machine learning models to analyze student data and provide insights.
 
-```markdown
-# 🎓 College Student Placement Prediction
+## Project Structure
 
-## 📌 Project Overview
-This project builds an end-to-end Machine Learning pipeline to predict whether a college student will be placed based on their academic performance, cognitive skills, and extra-curricular activities. 
+The project is organized as follows:
 
-The system uses an **XGBoost Classifier**, which achieved **near-perfect accuracy** on the test set, identifying `CGPA` and `Communication Skills` as the most critical factors for success.
+- **`ml/`**: Contains the core machine learning logic.
+    - `models/`: Directory storing trained models (`placement_model.pkl`, `salary_model.pkl`) and the label encoder (`label_encoder.pkl`).
+    - `predict.py`: Script for making predictions using the trained models. Contains `predict(data)` function.
+    - `preprocess.py`: Helper script for data preprocessing, including encoding categorical variables and adding a synthetic salary column.
+    - `train.ipynb`: Jupyter notebook used for training the machine learning models.
+- **`woc/`**: Virtual environment directory (exclude from version control).
+- **`college_student_placement_dataset.csv`**: The dataset used for training and analysis.
+- **`EDA_Report.ipynb`**: Jupyter notebook containing Exploratory Data Analysis (EDA) on the dataset.
+- **`requirement.txt`**: List of Python dependencies required for the project.
 
----
+## Installation
 
-## 📂 Repository Structure
+1.  **Clone the repository** (if applicable) or navigate to the project root.
+2.  **Create and activate a virtual environment** (optional but recommended):
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On macOS/Linux
+    # venv\Scripts\activate  # On Windows
+    ```
+3.  **Install dependencies**:
+    ```bash
+    pip install -r requirement.txt
+    ```
 
-| File | Description |
-| :--- | :--- |
-| `EDA_Report.ipynb` | **Exploratory Data Analysis:** Visualizes data distributions, checks correlations (e.g., IQ vs. CGPA), and identifies key trends. |
-| `train_model.ipynb` | **Training Pipeline:** Handles data cleaning, encoding, model training (XGBoost), and evaluation. |
-| `college_student_placement_dataset.csv` | **Dataset:** The raw data used for training and testing. |
-| `requirement.txt` | **Dependencies:** List of Python libraries required to run the project. |
-| `trained_model.pkl` | **Saved Model:** The serialized model (generated after running the training script) for future use. |
+## Usage
 
----
+### 1. Exploratory Data Analysis (EDA)
+Open `EDA_Report.ipynb` in Jupyter Notebook or VS Code to view the analysis of the dataset, including visualizations and insights.
 
-## 📊 Dataset Details
+### 2. Training Models
+To retrain the models, open and run the cells in `ml/train.ipynb`. This will:
+- Load and preprocess the data.
+- Train the placement and salary prediction models.
+- Save the trained models to the `ml/models/` directory.
 
-The dataset consists of student records with the following key features:
+### 3. Making Predictions
+You can use the `ml/predict.py` script to make predictions on new data.
 
-* **Target Variable:** `Placement` (0 = Not Placed, 1 = Placed)
-* **Academic:** `CGPA`, `Prev_Sem_Result`, `Academic_Performance`
-* **Cognitive & Skills:** `IQ`, `Communication_Skills`
-* **Experience:** `Internship_Experience` (Converted to Binary), `Projects_Completed`
-* **Other:** `Extra_Curricular_Score`
-
----
-
-## 🚀 How to Run
-
-### 1. Prerequisites
-Ensure you have Python installed. Clone this repository and install the dependencies:
-
-```bash
-# Install required libraries
-pip install -r requirement.txt
-
-```
-
-### 2. Exploratory Analysis
-
-Run `EDA_Report.ipynb` to see the visualizations:
-
-* Correlation Heatmaps
-* Distribution of Placed vs. Not Placed students
-* Impact of Internships on success rates
-
-### 3. Train the Model
-
-Run `train_model.ipynb`. This notebook will:
-
-1. Load and clean the dataset.
-2. Train the XGBoost model.
-3. Print evaluation metrics (Accuracy, Confusion Matrix).
-4. Save the model as `trained_model.pkl`.
-
----
-
-## 🧠 Model Performance
-
-The **XGBoost Classifier** was selected for its ability to handle non-linear relationships.
-
-| Metric | Score |
-| --- | --- |
-| **Accuracy** | **100%** (approx) |
-| **Precision** | 1.00 |
-| **Recall** | 1.00 |
-
-### Key Insights (Feature Importance)
-
-1. **CGPA:** The strongest indicator of placement.
-2. **Communication Skills:** The second most important factor.
-3. **IQ:** Important, but less correlated with placement than grades or soft skills.
-
----
-
-## 🔮 Making Predictions
-
-You can use the saved model to predict placement for new students using the code below:
+**Example Usage (Python):**
 
 ```python
-import joblib
-import pandas as pd
+from ml.predict import predict
 
-# 1. Load the model
-model = joblib.load('trained_model.pkl')
+sample_data = {
+    "IQ": 115,
+    "Prev_Sem_Result": 8.0,
+    "CGPA": 9.0,
+    "Academic_Performance": 8,
+    "Internship_Experience": "Yes",
+    "Extra_Curricular_Score": 5,
+    "Communication_Skills": 7,
+    "Projects_Completed": 2
+}
 
-# 2. Define a new student
-new_student = pd.DataFrame([{
-    'IQ': 110,
-    'Prev_Sem_Result': 8.5,
-    'CGPA': 8.2,
-    'Academic_Performance': 7,
-    'Internship_Experience': 1,  # 1 = Yes, 0 = No
-    'Extra_Curricular_Score': 6,
-    'Communication_Skills': 9,
-    'Projects_Completed': 3
-}])
-
-# 3. Predict
-prediction = model.predict(new_student)
-probability = model.predict_proba(new_student)[0][1]
-
-print(f"Prediction: {'Placed' if prediction[0] == 1 else 'Not Placed'}")
-print(f"Confidence: {probability:.2%}")
-
+prediction = predict(sample_data)
+print(prediction)
+# Output: {'placed': True, 'salary': 450000.0} (Example)
 ```
 
----
+## Dataset
+The dataset `college_student_placement_dataset.csv` contains information such as:
+- IQ
+- CGPA
+- Internship Experience
+- Projects Completed
+- Placement Status
+- Etc.
 
-## 👨‍💻 Author
-
-**Kaushal Nandaniya** *Winter of Code (WoC) Contribution*
-
-```
-
-```
+## Requirements
+- Python 3.x
+- pandas
+- numpy
+- scikit-learn
+- joblib
+- matplotlib
+- seaborn
+- xgboost
