@@ -1,0 +1,9 @@
+=== Model Performance Metrics ===
+Placement Classifier Accuracy: 1.0000
+Salary Regressor MAE: 2698.92
+Salary Regressor R2 Score: 0.9962
+
+=== Feature Importance Comparison ===
+See salary_importance. and job_importance for visual details.
+
+it clear shows that IQ matter more for both job and Salary, but CGPA might matter slightly more for the Salary package.
