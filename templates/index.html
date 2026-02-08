@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Predictor | AI-Powered Career Insights</title>
+    <meta name="description" content="Predict your campus placement chances and expected salary using our AI-powered prediction model.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🎯</span>
+                <span class="logo-text">PlacePredict</span>
+            </div>
+            <p class="tagline">AI-Powered Career Predictions</p>
+        </header>
+
+        <main class="main-content">
+            <div class="card glass-card">
+                <div class="card-header">
+                    <h1>Predict Your Placement</h1>
+                    <p>Enter your details below to get an instant prediction</p>
+                </div>
+
+                <form id="prediction-form" class="prediction-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="iq">
+                                <span class="label-icon">🧠</span>
+                                IQ Score
+                            </label>
+                            <input type="number" id="iq" name="iq" placeholder="e.g., 115" min="70" max="200" required>
+                            <span class="input-hint">Range: 70-200</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cgpa">
+                                <span class="label-icon">📊</span>
+                                CGPA
+                            </label>
+                            <input type="number" id="cgpa" name="cgpa" placeholder="e.g., 8.5" min="0" max="10" step="0.1" required>
+                            <span class="input-hint">Scale: 0-10</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prev_sem_result">
+                                <span class="label-icon">📈</span>
+                                Previous Semester Result
+                            </label>
+                            <input type="number" id="prev_sem_result" name="prev_sem_result" placeholder="e.g., 8.0" min="0" max="10" step="0.1" required>
+                            <span class="input-hint">Scale: 0-10</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="academic_performance">
+                                <span class="label-icon">🏆</span>
+                                Academic Performance
+                            </label>
+                            <input type="number" id="academic_performance" name="academic_performance" placeholder="e.g., 8" min="1" max="10" required>
+                            <span class="input-hint">Scale: 1-10</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="internship_experience">
+                                <span class="label-icon">💼</span>
+                                Internship Experience
+                            </label>
+                            <select id="internship_experience" name="internship_experience" required>
+                                <option value="">Select...</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="extra_curricular_score">
+                                <span class="label-icon">⭐</span>
+                                Extra Curricular Score
+                            </label>
+                            <input type="number" id="extra_curricular_score" name="extra_curricular_score" placeholder="e.g., 5" min="0" max="10" required>
+                            <span class="input-hint">Scale: 0-10</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="communication_skills">
+                                <span class="label-icon">🗣️</span>
+                                Communication Skills
+                            </label>
+                            <input type="number" id="communication_skills" name="communication_skills" placeholder="e.g., 7" min="1" max="10" required>
+                            <span class="input-hint">Scale: 1-10</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="projects_completed">
+                                <span class="label-icon">🚀</span>
+                                Projects Completed
+                            </label>
+                            <input type="number" id="projects_completed" name="projects_completed" placeholder="e.g., 3" min="0" max="20" required>
+                            <span class="input-hint">Number: 0-20</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submit-btn">
+                        <span class="btn-text">Predict My Future</span>
+                        <span class="btn-icon">✨</span>
+                        <div class="btn-loader hidden">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Card (Hidden by default) -->
+            <div id="results-card" class="card glass-card results-card hidden">
+                <div class="results-header">
+                    <h2>Your Prediction Results</h2>
+                </div>
+                
+                <div class="results-content">
+                    <div id="placement-result" class="result-item">
+                        <div class="result-icon" id="placement-icon">🎓</div>
+                        <div class="result-details">
+                            <span class="result-label">Placement Status</span>
+                            <span class="result-value" id="placement-status">-</span>
+                        </div>
+                    </div>
+
+                    <div id="salary-result" class="result-item">
+                        <div class="result-icon">💰</div>
+                        <div class="result-details">
+                            <span class="result-label">Expected Salary</span>
+                            <span class="result-value" id="salary-value">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="reset-btn" id="reset-btn">
+                    <span>Try Another Prediction</span>
+                    <span>🔄</span>
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Built with ❤️ using Machine Learning</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
